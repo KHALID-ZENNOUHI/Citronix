@@ -22,7 +22,7 @@ public class FarmController {
     @PostMapping("/save")
     public ResponseEntity<FarmVM> save(@Valid @RequestBody FarmVM farmVM) {
         Farm farm = farmMapper.toFarm(farmVM);
-        Farm savedFarm = farmService.update(farm);
+        Farm savedFarm = farmService.save(farm);
         FarmVM savedFarmVM = farmMapper.toFarmVM(savedFarm);
         return ResponseEntity.status(201).body(savedFarmVM);
     }
@@ -38,6 +38,15 @@ public class FarmController {
     @GetMapping("/{id}")
     public ResponseEntity<FarmVM> findById(@PathVariable Long id) {
         Farm farm = farmService.findById(id);
+        FarmVM farmVM = farmMapper.toFarmVM(farm);
+        return ResponseEntity.ok(farmVM);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<FarmVM> search(@RequestParam(required = false) String name,
+                                         @RequestParam(required = false) String location,
+                                         @RequestParam(required = false) Double area) {
+        Farm farm = farmService.search(name, location, area);
         FarmVM farmVM = farmMapper.toFarmVM(farm);
         return ResponseEntity.ok(farmVM);
     }

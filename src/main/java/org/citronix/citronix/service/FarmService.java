@@ -11,4 +11,6 @@ public interface FarmService {
     Farm update(Farm farm);
 
     Farm findById(Long id);
+
+    Farm search(String name, String location, Double area);
 }
