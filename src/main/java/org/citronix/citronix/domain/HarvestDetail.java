@@ -2,16 +2,14 @@ package org.citronix.citronix.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class HarvestDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

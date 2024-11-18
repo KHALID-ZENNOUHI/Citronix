@@ -6,6 +6,7 @@ import org.citronix.citronix.service.FarmService;
 import org.citronix.citronix.web.errors.FarmNotFoundException;
 import org.citronix.citronix.web.errors.IdMustBeNotNullException;
 import org.citronix.citronix.web.errors.IdMustBeNullException;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -33,5 +34,6 @@ public class FarmServiceImpl implements FarmService {
         if (id == null) throw new IdMustBeNotNullException();
         return farmRepository.findById(id).orElseThrow(FarmNotFoundException::new);
     }
+
 
 }
