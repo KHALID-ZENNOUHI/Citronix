@@ -1,0 +1,128 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1731936793905-1
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_farm
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: location
+                  type: VARCHAR(255)
+            tableName: farm
+  - changeSet:
+      id: 1731936793905-2
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_field
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: area
+                  type: DOUBLE
+            tableName: field
+  - changeSet:
+      id: 1731936793905-3
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_harvest
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: season
+                  type: VARCHAR(255)
+              - column:
+                  name: harvested_at
+                  type: DATETIME
+            tableName: harvest
+  - changeSet:
+      id: 1731936793905-4
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_harvestdetail
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: quantity
+                  type: DOUBLE
+            tableName: harvest_detail
+  - changeSet:
+      id: 1731936793905-5
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_sale
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: unit_price
+                  type: DOUBLE
+              - column:
+                  name: client
+                  type: VARCHAR(255)
+              - column:
+                  name: date
+                  type: DATETIME
+            tableName: sale
+  - changeSet:
+      id: 1731936793905-6
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_tree
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: planted_at
+                  type: DATETIME
+            tableName: tree
+
