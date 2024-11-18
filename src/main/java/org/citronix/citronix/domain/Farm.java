@@ -1,6 +1,7 @@
 package org.citronix.citronix.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,11 +20,21 @@ public class Farm {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
+    @Size(min = 5, max = 150)
     private String name;
 
+    @NotBlank
+    @Size(min = 5, max = 150)
     private String location;
 
+    @NotNull
+    @PastOrPresent
     private LocalDateTime createdAt;
+
+    @NotNull
+    @Positive
+    private Double area;
 
     @OneToMany(mappedBy = "farm")
     private List<Field> fields;

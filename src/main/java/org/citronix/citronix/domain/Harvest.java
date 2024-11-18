@@ -1,6 +1,8 @@
 package org.citronix.citronix.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,9 +22,12 @@ public class Harvest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private Season season;
 
+    @NotNull
+    @PastOrPresent
     private LocalDateTime harvestedAt;
 
     @OneToMany(mappedBy = "harvest")

@@ -1,6 +1,8 @@
 package org.citronix.citronix.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +20,7 @@ public class Field {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @DecimalMin(value = "0.1", message = "Field area must be at least 0.1 hectares.")
     private Double area;
 
     @ManyToOne
