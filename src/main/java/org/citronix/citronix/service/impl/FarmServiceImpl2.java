@@ -2,19 +2,23 @@ package org.citronix.citronix.service.impl;
 
 import org.citronix.citronix.domain.Farm;
 import org.citronix.citronix.repository.FarmRepository;
+import org.citronix.citronix.repository.dto.FarmDTO;
 import org.citronix.citronix.service.FarmService;
 import org.citronix.citronix.service.FieldService;
 import org.citronix.citronix.web.errors.*;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class FarmServiceImpl2 implements FarmService {
 
     private final FarmRepository farmRepository;
-    private final FieldServiceImpl1 fieldService;
+    private final FieldService fieldService;
 
-    public FarmServiceImpl2(FarmRepository farmRepository, FieldServiceImpl1 fieldService) {
+    public FarmServiceImpl2(FarmRepository farmRepository,  FieldService fieldService) {
         this.farmRepository = farmRepository;
         this.fieldService = fieldService;
     }
@@ -44,12 +48,27 @@ public class FarmServiceImpl2 implements FarmService {
     }
 
     @Override
-    public Boolean delete(Long id) {
+    public void delete(Long id) {
+
+    }
+
+    @Override
+    public Page<Farm> findAll(int page, int size) {
         return null;
     }
 
     @Override
     public Farm search(String name, String location, Double area) {
         return null;
+    }
+
+    @Override
+    public void checkFarmAreaGreaterThanSumOfFieldsArea(Farm farm) {
+
+    }
+
+    @Override
+    public List<FarmDTO> getFarmWithFieldsAreaLessThan(Double area) {
+        return List.of();
     }
 }

@@ -6,12 +6,9 @@ import org.citronix.citronix.service.FarmService;
 import org.citronix.citronix.web.vm.FarmVM;
 import org.citronix.citronix.web.vm.mapper.FarmMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 @RestController
 @RequestMapping("/api/v1/farm")
@@ -55,4 +52,13 @@ public class FarmController {
         FarmVM farmVM = farmMapper.toFarmVM(farm);
         return ResponseEntity.ok(farmVM);
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<Page<FarmVM>> findAll(@RequestParam(name = "page", required = false, defaultValue = "${pagination.defaultPage}") int page, @RequestParam(name = "size", required = false, defaultValue = "${pagination.defaultPageSize}") int size) {
+        Page<Farm> farms = farmService.findAll(page, size);
+        Page<FarmVM> farmVMs = farms.map(farmMapper::toFarmVM);
+        return ResponseEntity.ok(farmVMs);
+    }
+
+
 }

@@ -13,3 +13,7 @@ spring:
   liquibase:
     enabled: true
     change-log: db/changelog/master.yml
+
+pagination:
+  defaultPageSize: 50
+  defaultPage: 0

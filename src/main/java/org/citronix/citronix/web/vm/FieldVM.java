@@ -17,11 +17,11 @@ import java.util.List;
 public class FieldVM {
     private Long id;
 
-    @DecimalMin(value = "1000", message = "Field area must be at least 0.1 hectares.")
+    @DecimalMin(value = "1000", message = "Field area must be at least 1000 m^2.")
     private Double area;
 
     @NotNull
-    private Long FarmId;
+    private Long farmId;
 
 
     private List<Tree> trees;
