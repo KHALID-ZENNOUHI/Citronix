@@ -5,19 +5,22 @@ import org.citronix.citronix.domain.Field;
 import org.citronix.citronix.repository.FarmRepository;
 import org.citronix.citronix.repository.dto.FarmDTO;
 import org.citronix.citronix.service.FarmService;
+import org.citronix.citronix.service.FieldService;
 import org.citronix.citronix.web.errors.FarmNotFoundException;
 import org.citronix.citronix.web.errors.FieldsInFarmMustBeEmptyException;
 import org.citronix.citronix.web.errors.IdMustBeNotNullException;
 import org.citronix.citronix.web.errors.IdMustBeNullException;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
+@Qualifier("FarmServiceImpl1")
 public class FarmServiceImpl1 implements FarmService {
     private final FarmRepository farmRepository;
+//    private final FieldService fieldService;
 
     public FarmServiceImpl1(FarmRepository farmRepository) {
         this.farmRepository = farmRepository;
@@ -43,8 +46,10 @@ public class FarmServiceImpl1 implements FarmService {
     }
 
     @Override
-    public Boolean delete(Long id) {
-        return null;
+    public void delete(Long id) {
+//        Farm farm = findById(id);
+//        farm.getFields().forEach(field -> fieldService.delete(field.getId()));
+//        farmRepository.deleteById(farm.getId());
     }
 
     @Override
@@ -75,8 +80,22 @@ public class FarmServiceImpl1 implements FarmService {
         return farmRepository.findOne(example).orElseThrow(FarmNotFoundException::new);
     }
 
+    @Override
     public List<FarmDTO> getFarmWithFieldsAreaLessThan(Double area) {
         return farmRepository.findFarmWithAreaLessThan(area);
+    }
+
+    @Override
+    public void checkFarmAreaGreaterThanSumOfFieldsArea(Farm farm) {
+        if (farm.getArea() <= farm.getFields().stream().mapToDouble(Field::getArea).sum()) {
+            throw new IllegalArgumentException("Farm area must be greater than sum of fields area");
+        }
+    }
+
+    @Override
+    public Page<Farm> findAll(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").ascending());
+        return farmRepository.findAll(pageable);
     }
 
 }

@@ -2,6 +2,8 @@ package org.citronix.citronix.repository;
 
 import org.citronix.citronix.domain.Farm;
 import org.citronix.citronix.repository.dto.FarmDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -16,5 +18,5 @@ public interface FarmRepository extends JpaRepository<Farm, Long> {
             "FROM Farm f JOIN f.fields fl WHERE SUM(fl.area) < :area")
     List<FarmDTO> findFarmWithAreaLessThan(Double area);
 
-    List<Farm> findAll();
+    Page<Farm> findAll(Pageable pageable);
 }

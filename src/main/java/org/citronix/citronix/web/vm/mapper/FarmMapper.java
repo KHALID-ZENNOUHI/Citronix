@@ -5,7 +5,7 @@ import org.citronix.citronix.web.vm.FarmVM;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {FieldMapper.class})
 public interface FarmMapper {
 
     FarmMapper INSTANCE = Mappers.getMapper(FarmMapper.class);

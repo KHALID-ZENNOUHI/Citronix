@@ -31,7 +31,7 @@ public class Farm {
     private LocalDateTime createdAt;
 
     @NotNull
-    @Positive
+    @DecimalMin(value = "2000", message = "Farm area must be at least 2000 m^2.")
     private Double area;
 
     @OneToMany(mappedBy = "farm")
