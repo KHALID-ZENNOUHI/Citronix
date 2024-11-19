@@ -56,4 +56,29 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleFarmNotFoundException(FarmNotFoundException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(FieldsInFarmMustBeEmptyException.class)
+    public ResponseEntity<String> handleFieldsInFarmMustBeEmptyException(FieldsInFarmMustBeEmptyException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(FieldsInFarmMustNotBeEmptyException.class)
+    public ResponseEntity<String> handleFieldsInFarmMustNotBeEmptyException(FieldsInFarmMustNotBeEmptyException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(TreesInFieldMustBeEmptyException.class)
+    public ResponseEntity<String> handleTreesInFieldMustBeEmptyException(TreesInFieldMustBeEmptyException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(FieldNotFoundException.class)
+    public ResponseEntity<String> handleFieldNotFoundException(FieldNotFoundException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
 }
