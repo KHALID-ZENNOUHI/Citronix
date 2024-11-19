@@ -18,7 +18,7 @@ public class Field {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @DecimalMin(value = "0.1", message = "Field area must be at least 0.1 hectares.")
+    @DecimalMin(value = "1000", message = "Field area must be at least 0.1 hectares.")
     private Double area;
 
     @ManyToOne

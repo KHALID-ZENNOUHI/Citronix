@@ -1,0 +1,17 @@
+package org.citronix.citronix.service;
+
+import org.citronix.citronix.domain.Field;
+import org.springframework.stereotype.Service;
+
+@Service
+public interface FieldService {
+
+        Field save(Field field);
+
+        Field update(Field field);
+
+        Field findById(Long id);
+
+        Boolean delete(Long id);
+
+}

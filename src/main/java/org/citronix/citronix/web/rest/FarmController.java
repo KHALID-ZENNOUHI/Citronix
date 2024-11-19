@@ -5,8 +5,13 @@ import org.citronix.citronix.domain.Farm;
 import org.citronix.citronix.service.FarmService;
 import org.citronix.citronix.web.vm.FarmVM;
 import org.citronix.citronix.web.vm.mapper.FarmMapper;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 @RestController
 @RequestMapping("/api/v1/farm")
@@ -14,7 +19,7 @@ public class FarmController {
     private final FarmService farmService;
     private final FarmMapper farmMapper;
 
-    public FarmController(FarmService farmService, FarmMapper farmMapper) {
+    public FarmController(@Qualifier("farmServiceImpl1") FarmService farmService, FarmMapper farmMapper) {
         this.farmService = farmService;
         this.farmMapper = farmMapper;
     }

@@ -1,30 +1,32 @@
 package org.citronix.citronix.service.impl;
 
 import org.citronix.citronix.domain.Farm;
+import org.citronix.citronix.domain.Field;
 import org.citronix.citronix.repository.FarmRepository;
+import org.citronix.citronix.repository.dto.FarmDTO;
 import org.citronix.citronix.service.FarmService;
 import org.citronix.citronix.web.errors.FarmNotFoundException;
+import org.citronix.citronix.web.errors.FieldsInFarmMustBeEmptyException;
 import org.citronix.citronix.web.errors.IdMustBeNotNullException;
 import org.citronix.citronix.web.errors.IdMustBeNullException;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
+import java.util.List;
 
 @Component
-public class FarmServiceImpl implements FarmService {
+public class FarmServiceImpl1 implements FarmService {
     private final FarmRepository farmRepository;
 
-    public FarmServiceImpl(FarmRepository farmRepository) {
+    public FarmServiceImpl1(FarmRepository farmRepository) {
         this.farmRepository = farmRepository;
     }
 
     @Override
     public Farm save(Farm farm) {
         if (farm.getId() != null) throw new IdMustBeNullException();
+        if (farm.getFields()!= null  && !farm.getFields().isEmpty()) throw new FieldsInFarmMustBeEmptyException();
         return farmRepository.save(farm);
     }
 
@@ -38,6 +40,11 @@ public class FarmServiceImpl implements FarmService {
     public Farm findById(Long id) {
         if (id == null) throw new IdMustBeNotNullException();
         return farmRepository.findById(id).orElseThrow(FarmNotFoundException::new);
+    }
+
+    @Override
+    public Boolean delete(Long id) {
+        return null;
     }
 
     @Override
@@ -65,8 +72,11 @@ public class FarmServiceImpl implements FarmService {
         Example<Farm> example = Example.of(exampleFarm, matcher);
 
 
-        return farmRepository.findOne(example)
-                .orElseThrow(FarmNotFoundException::new);
+        return farmRepository.findOne(example).orElseThrow(FarmNotFoundException::new);
+    }
+
+    public List<FarmDTO> getFarmWithFieldsAreaLessThan(Double area) {
+        return farmRepository.findFarmWithAreaLessThan(area);
     }
 
 }

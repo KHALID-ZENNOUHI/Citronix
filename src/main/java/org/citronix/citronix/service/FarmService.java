@@ -12,5 +12,7 @@ public interface FarmService {
 
     Farm findById(Long id);
 
+    Boolean delete(Long id);
+
     Farm search(String name, String location, Double area);
 }
