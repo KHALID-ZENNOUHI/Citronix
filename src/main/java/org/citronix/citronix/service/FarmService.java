@@ -25,4 +25,6 @@ public interface FarmService {
     void checkFarmAreaGreaterThanSumOfFieldsArea(Farm farm);
 
     List<FarmDTO> getFarmWithFieldsAreaLessThan(Double area);
+
+    void checkMaxFieldOfFarmIsTen(Farm farm);
 }
