@@ -19,11 +19,11 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class FieldServiceImpl1 implements FieldService {
+public class FieldServiceImpl implements FieldService {
     private final FieldRepository fieldRepository;
     private final FarmService farmService;
 
-    public FieldServiceImpl1(FieldRepository fieldRepository, @Qualifier("FarmServiceImpl1") FarmService farmService) {
+    public FieldServiceImpl(FieldRepository fieldRepository, @Qualifier("FarmServiceImpl1") FarmService farmService) {
         this.fieldRepository = fieldRepository;
         this.farmService = farmService;
     }
@@ -35,10 +35,8 @@ public class FieldServiceImpl1 implements FieldService {
         Farm farm = farmService.findById(field.getFarm().getId());
         field.setFarm(farm);
         checkFieldAreaLessThanFiftyPercentOfFarmArea(field);
-        List<Field> fields = farm.getFields();
-        fields.add(field);
-        farm.setFields(fields);
         farmService.checkFarmAreaGreaterThanSumOfFieldsArea(farm);
+        farmService.checkMaxFieldOfFarmIsTen(farm);
         return fieldRepository.save(field);
     }
 
@@ -71,4 +69,6 @@ public class FieldServiceImpl1 implements FieldService {
             throw new IllegalArgumentException("Field area must be less than 50% of farm area");
         }
     }
+
+
 }

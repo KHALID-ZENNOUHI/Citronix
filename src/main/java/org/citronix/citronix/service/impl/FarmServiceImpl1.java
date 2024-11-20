@@ -6,10 +6,7 @@ import org.citronix.citronix.repository.FarmRepository;
 import org.citronix.citronix.repository.dto.FarmDTO;
 import org.citronix.citronix.service.FarmService;
 import org.citronix.citronix.service.FieldService;
-import org.citronix.citronix.web.errors.FarmNotFoundException;
-import org.citronix.citronix.web.errors.FieldsInFarmMustBeEmptyException;
-import org.citronix.citronix.web.errors.IdMustBeNotNullException;
-import org.citronix.citronix.web.errors.IdMustBeNullException;
+import org.citronix.citronix.web.errors.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Component;
@@ -87,7 +84,7 @@ public class FarmServiceImpl1 implements FarmService {
 
     @Override
     public void checkFarmAreaGreaterThanSumOfFieldsArea(Farm farm) {
-        if (farm.getArea() <= farm.getFields().stream().mapToDouble(Field::getArea).sum()) {
+        if (farm.getArea() < farm.getFields().stream().mapToDouble(Field::getArea).sum()) {
             throw new IllegalArgumentException("Farm area must be greater than sum of fields area");
         }
     }
@@ -97,5 +94,14 @@ public class FarmServiceImpl1 implements FarmService {
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").ascending());
         return farmRepository.findAll(pageable);
     }
+
+    @Override
+    public void checkMaxFieldOfFarmIsTen(Farm farm) {
+        if (farm.getFields().size() > 10) {
+            throw new IllegalArgumentException("Farm can have at most 10 fields");
+        }
+    }
+
+
 
 }

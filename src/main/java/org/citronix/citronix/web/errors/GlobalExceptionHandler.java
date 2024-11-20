@@ -81,4 +81,29 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(TreeNotFoundException.class)
+    public ResponseEntity<String> handleTreeNotFoundException(TreeNotFoundException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(PlantingSeasonIsOverException.class)
+    public ResponseEntity<String> handlePlantingSeasonIsOverException(PlantingSeasonIsOverException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(HarvestDetailsInTreeMustBeEmptyException.class)
+    public ResponseEntity<String> handleHarvestDetailsInTreeMustBeEmptyException(HarvestDetailsInTreeMustBeEmptyException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MaxAllowedTreesDepassedException.class)
+    public ResponseEntity<String> handleMaxAllowedTreesDepassedException(MaxAllowedTreesDepassedException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+
 }

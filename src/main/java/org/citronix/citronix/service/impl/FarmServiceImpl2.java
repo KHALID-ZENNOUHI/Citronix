@@ -71,4 +71,11 @@ public class FarmServiceImpl2 implements FarmService {
     public List<FarmDTO> getFarmWithFieldsAreaLessThan(Double area) {
         return List.of();
     }
+
+    @Override
+    public void checkMaxFieldOfFarmIsTen(Farm farm) {
+        if (farm.getFields().size() > 10) {
+            throw new IllegalArgumentException("Farm can have maximum 10 fields");
+        }
+    }
 }
