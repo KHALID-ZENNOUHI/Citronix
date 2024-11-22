@@ -36,7 +36,7 @@ public class Tree {
         return Period.between(plantedAt.toLocalDate(), LocalDateTime.now().toLocalDate());
     }
 
-    public double calculateAnnualProductivity() {
+    public double calculateProductivity() {
         Period age = calculateAge();
         int years = age.getYears();
 

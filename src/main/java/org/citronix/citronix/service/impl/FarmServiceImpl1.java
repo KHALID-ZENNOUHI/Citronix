@@ -1,5 +1,6 @@
 package org.citronix.citronix.service.impl;
 
+import jakarta.transaction.Transactional;
 import org.citronix.citronix.domain.Farm;
 import org.citronix.citronix.domain.Field;
 import org.citronix.citronix.repository.FarmRepository;
@@ -8,6 +9,7 @@ import org.citronix.citronix.service.FarmService;
 import org.citronix.citronix.service.FieldService;
 import org.citronix.citronix.web.errors.*;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Component;
 
@@ -45,7 +47,7 @@ public class FarmServiceImpl1 implements FarmService {
     @Override
     public void delete(Long id) {
 //        Farm farm = findById(id);
-//        farm.getFields().forEach(field -> fieldService.delete(field.getId()));
+//        fieldService.deleteAllByFarmId(farm.getId());
 //        farmRepository.deleteById(farm.getId());
     }
 

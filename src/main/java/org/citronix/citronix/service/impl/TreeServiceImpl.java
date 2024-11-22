@@ -1,5 +1,6 @@
 package org.citronix.citronix.service.impl;
 
+import org.citronix.citronix.domain.Farm;
 import org.citronix.citronix.domain.Field;
 import org.citronix.citronix.domain.Tree;
 import org.citronix.citronix.repository.TreeRepository;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.Comparator;
 import java.util.List;
 @Component
 public class TreeServiceImpl implements TreeService {
@@ -32,6 +34,8 @@ public class TreeServiceImpl implements TreeService {
         if (tree.getHarvestDetails() != null && !tree.getHarvestDetails().isEmpty()) throw new TreesInFieldMustBeEmptyException();
         if (!isPlantingSeason(tree.getPlantedAt())) throw new PlantingSeasonIsOverException();
         Field field = fieldService.findById(tree.getField().getId());
+        Farm farm = field.getFarm();
+        if (tree.getPlantedAt().isBefore(farm.getCreatedAt())) throw new PlantingDateBeforeFarmCreationException();
         checkTreeSpacing(field);
         return treeRepository.save(tree);
     }
@@ -72,4 +76,5 @@ public class TreeServiceImpl implements TreeService {
         double maxAllowedTrees = (field.getArea() / 1000) * MAX_TREES_PER_1000_M2;
         if (field.getTrees().size() > maxAllowedTrees) throw new MaxAllowedTreesDepassedException();
     }
+
 }

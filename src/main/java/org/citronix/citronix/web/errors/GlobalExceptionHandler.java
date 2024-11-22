@@ -105,5 +105,23 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(PlantingDateBeforeFarmCreationException.class)
+    public ResponseEntity<String> handlePlantingDateBeforeFarmCreationException(PlantingDateBeforeFarmCreationException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(HarvestNotFoundException.class)
+    public ResponseEntity<String> handleHarvestNotFoundException(HarvestNotFoundException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(HarvestAlreadyExistsForThisSeasonException.class)
+    public ResponseEntity<String> handleHarvestAlreadyExistsForThisSeasonException(HarvestAlreadyExistsForThisSeasonException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
 
 }
