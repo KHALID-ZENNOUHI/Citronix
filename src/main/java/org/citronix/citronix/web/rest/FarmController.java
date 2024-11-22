@@ -10,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/farm")
 public class FarmController {
@@ -45,12 +47,12 @@ public class FarmController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<FarmVM> search(@RequestParam(required = false) String name,
+    public ResponseEntity<List<FarmVM>> search(@RequestParam(required = false) String name,
                                          @RequestParam(required = false) String location,
                                          @RequestParam(required = false) Double area) {
-        Farm farm = farmService.search(name, location, area);
-        FarmVM farmVM = farmMapper.toFarmVM(farm);
-        return ResponseEntity.ok(farmVM);
+        List<Farm> farms = farmService.search(name, location, area);
+        List<FarmVM> farmVMS = farms.stream().map(farmMapper::toFarmVM).toList();
+        return ResponseEntity.ok(farmVMS);
     }
 
     @GetMapping("/all")

@@ -58,7 +58,7 @@ public class FarmServiceImpl2 implements FarmService {
     }
 
     @Override
-    public Farm search(String name, String location, Double area) {
+    public List<Farm> search(String name, String location, Double area) {
         return null;
     }
 
