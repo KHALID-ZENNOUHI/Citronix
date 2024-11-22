@@ -10,4 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface FieldRepository extends JpaRepository<Field, Long> {
 
     Page<Field> findAll(Pageable pageable);
+
+    void deleteAllByFarmId(Long farmId);
 }

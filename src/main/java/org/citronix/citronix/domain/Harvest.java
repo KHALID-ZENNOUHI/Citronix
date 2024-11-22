@@ -1,8 +1,10 @@
 package org.citronix.citronix.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 import org.citronix.citronix.domain.eum.Season;
 
@@ -12,7 +14,6 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 @Setter
 @Builder
 public class Harvest {
@@ -20,7 +21,6 @@ public class Harvest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
     private Season season;
 
@@ -28,18 +28,47 @@ public class Harvest {
     @PastOrPresent
     private LocalDateTime harvestedAt;
 
+    @NotNull
+    @PositiveOrZero
+    private Double totalQuantity;
+
     @OneToMany(mappedBy = "harvest")
     private List<HarvestDetail> harvestDetails;
 
     @OneToMany(mappedBy = "harvest")
     private List<Sale> sales;
 
+    public Long getId() {
+        return id;
+    }
+
+    public Season getSeason() {
+        return season;
+    }
+
+    public @NotNull @PastOrPresent LocalDateTime getHarvestedAt() {
+        return harvestedAt;
+    }
+
+    public @NotNull @PositiveOrZero Double getTotalQuantity() {
+        return totalQuantity;
+    }
+
+    @JsonIgnore
+    public List<HarvestDetail> getHarvestDetails() {
+        return harvestDetails;
+    }
+
+    public List<Sale> getSales() {
+        return sales;
+    }
+
     @Override
     public String toString() {
         return "Harvest{" +
                 "id=" + id +
-                ", season=" + season +
                 ", harvestedAt=" + harvestedAt +
+                ", totalQuantity=" + totalQuantity +
                 ", harvestDetails=" + harvestDetails.size() +
                 ", sales=" + sales.size() +
                 '}';

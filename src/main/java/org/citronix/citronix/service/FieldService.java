@@ -15,6 +15,8 @@ public interface FieldService {
 
         void delete(Long id);
 
+        void deleteAllByFarmId(Long farmId);
+
         Page<Field> findAll(int page, int size);
 
 

@@ -18,7 +18,7 @@ public class FarmServiceImpl2 implements FarmService {
     private final FarmRepository farmRepository;
     private final FieldService fieldService;
 
-    public FarmServiceImpl2(FarmRepository farmRepository,  FieldService fieldService) {
+    public FarmServiceImpl2(FarmRepository farmRepository, FieldService fieldService) {
         this.farmRepository = farmRepository;
         this.fieldService = fieldService;
     }

@@ -59,6 +59,12 @@ public class FieldServiceImpl implements FieldService {
     }
 
     @Override
+    public void deleteAllByFarmId(Long farmId) {
+        if (farmId == null) throw new IdMustBeNotNullException();
+        fieldRepository.deleteAllByFarmId(farmId);
+    }
+
+    @Override
     public Page<Field> findAll(int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("area").ascending());
         return fieldRepository.findAll(pageable);
