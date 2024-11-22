@@ -52,7 +52,7 @@ public class FarmServiceImpl1 implements FarmService {
     }
 
     @Override
-    public Farm search(String name, String location, Double area) {
+    public List<Farm> search(String name, String location, Double area) {
 
         if (name == null && location == null && area == null) {
             throw new IllegalArgumentException("At least one search criteria must be provided.");
@@ -76,7 +76,7 @@ public class FarmServiceImpl1 implements FarmService {
         Example<Farm> example = Example.of(exampleFarm, matcher);
 
 
-        return farmRepository.findOne(example).orElseThrow(FarmNotFoundException::new);
+        return farmRepository.findAll(example);
     }
 
     @Override

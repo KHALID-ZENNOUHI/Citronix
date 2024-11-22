@@ -20,7 +20,7 @@ public interface FarmService {
 
     Page<Farm> findAll(int page, int size);
 
-    Farm search(String name, String location, Double area);
+    List<Farm> search(String name, String location, Double area);
 
     void checkFarmAreaGreaterThanSumOfFieldsArea(Farm farm);
 
