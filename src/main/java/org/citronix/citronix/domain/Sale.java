@@ -33,6 +33,10 @@ public class Sale {
     @ManyToOne
     private Harvest harvest;
 
+    public Double getIncome() {
+        return unitPrice * harvest.getTotalQuantity();
+    }
+
     @Override
     public String toString() {
         return "Sale{" +
