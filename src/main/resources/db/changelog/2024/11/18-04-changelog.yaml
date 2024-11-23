@@ -1,0 +1,87 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1731941600378-7
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: area
+                  type: DOUBLE
+            tableName: farm
+  - changeSet:
+      id: 1731941600378-8
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addNotNullConstraint:
+            columnName: area
+            tableName: farm
+  - changeSet:
+      id: 1731941600378-10
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addNotNullConstraint:
+            columnName: created_at
+            tableName: farm
+  - changeSet:
+      id: 1731941600378-1
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addNotNullConstraint:
+            columnDataType: DATETIME
+            columnName: date
+            tableName: sale
+            validate: true
+  - changeSet:
+      id: 1731941600378-2
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addNotNullConstraint:
+            columnDataType: DATETIME
+            columnName: harvested_at
+            tableName: harvest
+            validate: true
+  - changeSet:
+      id: 1731941600378-3
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - modifyDataType:
+            columnName: location
+            newDataType: VARCHAR(150)
+            tableName: farm
+  - changeSet:
+      id: 1731941600378-4
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - modifyDataType:
+            columnName: name
+            newDataType: VARCHAR(150)
+            tableName: farm
+  - changeSet:
+      id: 1731941600378-5
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addNotNullConstraint:
+            columnDataType: DATETIME
+            columnName: planted_at
+            tableName: tree
+            validate: true
+  - changeSet:
+      id: 1731941600378-6
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addNotNullConstraint:
+            columnDataType: VARCHAR(255)
+            columnName: season
+            tableName: harvest
+            validate: true
+
