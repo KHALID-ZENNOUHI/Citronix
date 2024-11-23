@@ -2,7 +2,9 @@ package org.citronix.citronix.service.impl;
 
 import org.citronix.citronix.domain.Farm;
 import org.citronix.citronix.domain.Field;
+import org.citronix.citronix.domain.HarvestDetail;
 import org.citronix.citronix.domain.Tree;
+import org.citronix.citronix.repository.HarvestDetailRepository;
 import org.citronix.citronix.repository.TreeRepository;
 import org.citronix.citronix.service.FieldService;
 import org.citronix.citronix.service.TreeService;
@@ -22,10 +24,12 @@ public class TreeServiceImpl implements TreeService {
     private final TreeRepository treeRepository;
     private static final int MAX_TREES_PER_1000_M2 = 10;
     private final FieldService fieldService;
+    private final HarvestDetailRepository harvestDetailRepository;
 
-    public TreeServiceImpl(TreeRepository treeRepository, FieldService fieldService) {
+    public TreeServiceImpl(TreeRepository treeRepository, FieldService fieldService, HarvestDetailRepository harvestDetailRepository) {
         this.treeRepository = treeRepository;
         this.fieldService = fieldService;
+        this.harvestDetailRepository = harvestDetailRepository;
     }
 
     @Override
@@ -57,7 +61,10 @@ public class TreeServiceImpl implements TreeService {
 
     @Override
     public void delete(Long id) {
-
+        if (id == null) throw new IdMustBeNotNullException();
+        Tree tree = findById(id);
+        harvestDetailRepository.deleteAllInBatch(tree.getHarvestDetails());
+        treeRepository.deleteById(tree.getId());
     }
 
     @Override

@@ -29,7 +29,7 @@ public class HarvestController {
 
     @PutMapping("/update")
     public ResponseEntity<Harvest> update(@Valid @RequestBody HarvestVM harvestVM) {
-        Harvest harvest = harvestService.update(harvestVM.getHarvestDate(), harvestVM.getFieldId());
+        Harvest harvest = harvestService.update(harvestVM.getId(), harvestVM.getHarvestDate(), harvestVM.getFieldId());
         return ResponseEntity.ok(harvest);
     }
 

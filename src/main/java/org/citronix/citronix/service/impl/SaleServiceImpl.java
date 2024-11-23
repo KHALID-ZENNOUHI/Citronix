@@ -57,7 +57,7 @@ public class SaleServiceImpl implements SaleService {
     @Override
     public void delete(Long id) {
         if (id == null) throw new IdMustBeNotNullException();
-        Sale sale = saleRepository.findById(id).orElseThrow(SaleNotFoundException::new);
+        Sale sale = findById(id);
         saleRepository.delete(sale);
     }
 

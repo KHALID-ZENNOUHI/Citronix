@@ -1,6 +1,5 @@
 package org.citronix.citronix.service.impl;
 
-import jakarta.transaction.Transactional;
 import org.citronix.citronix.domain.Farm;
 import org.citronix.citronix.domain.Field;
 import org.citronix.citronix.repository.FarmRepository;
@@ -9,20 +8,20 @@ import org.citronix.citronix.service.FarmService;
 import org.citronix.citronix.service.FieldService;
 import org.citronix.citronix.web.errors.*;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
-@Qualifier("FarmServiceImpl1")
-public class FarmServiceImpl1 implements FarmService {
+@Qualifier("FarmServiceImpl")
+public class FarmServiceImpl implements FarmService {
     private final FarmRepository farmRepository;
-//    private final FieldService fieldService;
+    private final FieldService fieldService;
 
-    public FarmServiceImpl1(FarmRepository farmRepository) {
+    public FarmServiceImpl(FarmRepository farmRepository, FieldService fieldService) {
         this.farmRepository = farmRepository;
+        this.fieldService = fieldService;
     }
 
     @Override
@@ -46,9 +45,14 @@ public class FarmServiceImpl1 implements FarmService {
 
     @Override
     public void delete(Long id) {
-//        Farm farm = findById(id);
-//        fieldService.deleteAllByFarmId(farm.getId());
-//        farmRepository.deleteById(farm.getId());
+        if (id == null) throw new IdMustBeNotNullException();
+        Farm farm = findById(id);
+        if (farm.getFields() != null && !farm.getFields().isEmpty()) {
+            farm.getFields().forEach(field -> {
+                fieldService.delete(field.getId());
+            });
+        }
+        farmRepository.delete(farm);
     }
 
     @Override

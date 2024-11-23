@@ -5,11 +5,13 @@ import org.citronix.citronix.domain.Field;
 import org.citronix.citronix.repository.FieldRepository;
 import org.citronix.citronix.service.FarmService;
 import org.citronix.citronix.service.FieldService;
+import org.citronix.citronix.service.TreeService;
 import org.citronix.citronix.web.errors.FieldNotFoundException;
 import org.citronix.citronix.web.errors.IdMustBeNotNullException;
 import org.citronix.citronix.web.errors.IdMustBeNullException;
 import org.citronix.citronix.web.errors.TreesInFieldMustBeEmptyException;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,10 +24,12 @@ import java.util.List;
 public class FieldServiceImpl implements FieldService {
     private final FieldRepository fieldRepository;
     private final FarmService farmService;
+    private final TreeService treeService;
 
-    public FieldServiceImpl(FieldRepository fieldRepository, @Qualifier("FarmServiceImpl1") FarmService farmService) {
+    public FieldServiceImpl(FieldRepository fieldRepository,@Lazy FarmService farmService,@Lazy TreeService treeService) {
         this.fieldRepository = fieldRepository;
         this.farmService = farmService;
+        this.treeService = treeService;
     }
 
     @Override
@@ -54,7 +58,11 @@ public class FieldServiceImpl implements FieldService {
 
     @Override
     public void delete(Long id) {
+        if (id == null) throw new IdMustBeNotNullException();
         Field field = findById(id);
+        if (field.getTrees() != null && !field.getTrees().isEmpty()){
+            field.getTrees().forEach(tree -> treeService.delete(tree.getId()));
+        }
         fieldRepository.deleteById(field.getId());
     }
 

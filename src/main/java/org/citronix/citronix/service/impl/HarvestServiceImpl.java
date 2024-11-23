@@ -10,9 +10,7 @@ import org.citronix.citronix.repository.HarvestRepository;
 import org.citronix.citronix.service.FieldService;
 import org.citronix.citronix.service.HarvestService;
 import org.citronix.citronix.util.Util;
-import org.citronix.citronix.web.errors.HarvestAlreadyExistsForThisSeasonException;
-import org.citronix.citronix.web.errors.HarvestNotFoundException;
-import org.citronix.citronix.web.errors.IdMustBeNotNullException;
+import org.citronix.citronix.web.errors.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -64,29 +62,20 @@ public class HarvestServiceImpl implements HarvestService {
         return harvestRepository.save(savedHarvest);
     }
 
+    @Transactional
     @Override
-    public Harvest update(LocalDateTime harvestDate, Long fieldId) {
-        isHarvestExistsBySeasonAndYear(fieldId, harvestDate);
-        Field field = fieldService.findById(fieldId);
-        Harvest harvest = new Harvest();
-        Double totalQuantity = 0.0;
-        harvest.setTotalQuantity(totalQuantity);
-        harvest.setHarvestedAt(harvestDate);
-        harvest.setSeason(Util.getSeason(harvestDate));
-        Harvest savedHarvest = harvestRepository.save(harvest);
-        List< HarvestDetail> harvestDetails = new ArrayList<>();
-        for (Tree tree : field.getTrees()) {
-            HarvestDetail harvestDetail = new HarvestDetail();
-            harvestDetail.setTree(tree);
-            harvestDetail.setHarvest(savedHarvest);
-            harvestDetail.setQuantity(tree.calculateProductivity());
-            harvestDetails.add(harvestDetail);
-            totalQuantity += harvestDetail.getQuantity();
+    public Harvest update(Long id, LocalDateTime harvestDate, Long fieldId) {
+        Harvest harvest = findById(id);
+        Field field = getFieldByHarvestId(harvest.getId());
+        if (fieldId.equals(field.getId())){
+            isHarvestExistsBySeasonAndYear(fieldId, harvestDate);
+            harvest.setHarvestedAt(harvestDate);
+            harvest.setSeason(Util.getSeason(harvestDate));
+            return harvestRepository.save(harvest);
+        }else {
+            delete(id);
+            return save(harvestDate, fieldId);
         }
-        harvestDetailRepository.saveAll(harvestDetails);
-        savedHarvest.setTotalQuantity(totalQuantity);
-        savedHarvest.setHarvestDetails(harvestDetails);
-        return harvestRepository.save(savedHarvest);
     }
 
     @Override
@@ -97,7 +86,11 @@ public class HarvestServiceImpl implements HarvestService {
 
     @Override
     public void delete(Long id) {
-
+        Harvest harvest = findById(id);
+        if (harvest.getHarvestDetails() != null && !harvest.getHarvestDetails().isEmpty()) {
+            harvestDetailRepository.deleteAll(harvest.getHarvestDetails());
+        }
+        harvestRepository.delete(harvest);
     }
 
     @Override
@@ -117,8 +110,15 @@ public class HarvestServiceImpl implements HarvestService {
 
     public List<Harvest> getHarvestsByFieldId(Long fieldId) {
         Field field = fieldService.findById(fieldId);
+        if (field.getTrees() == null || field.getTrees().isEmpty()) throw new ThereIsNoTreeInFieldException();
         Tree tree = field.getTrees().get(0);
+        if (tree.getHarvestDetails() == null || tree.getHarvestDetails().isEmpty()) throw new ThereIsNoHarvestDetailsInTreeException();
         return tree.getHarvestDetails().stream().map(HarvestDetail::getHarvest).toList();
+    }
+
+    public Field getFieldByHarvestId(Long harvestId) {
+        Harvest harvest = findById(harvestId);
+        return harvest.getHarvestDetails().get(0).getTree().getField();
     }
 
 

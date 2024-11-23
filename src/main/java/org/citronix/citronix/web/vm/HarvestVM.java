@@ -12,6 +12,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class HarvestVM {
+    private Long id;
+
     @PastOrPresent
     LocalDateTime harvestDate;
 

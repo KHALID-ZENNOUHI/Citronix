@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public interface HarvestService {
     Harvest save(LocalDateTime harvestDate, Long fieldId);
 
-    Harvest update(LocalDateTime harvestDate, Long fieldId);
+    Harvest update(Long id,LocalDateTime harvestDate, Long fieldId);
 
     Harvest findById(Long id);
 

@@ -59,6 +59,7 @@ public class Harvest {
         return harvestDetails;
     }
 
+    @JsonIgnore
     public List<Sale> getSales() {
         return sales;
     }

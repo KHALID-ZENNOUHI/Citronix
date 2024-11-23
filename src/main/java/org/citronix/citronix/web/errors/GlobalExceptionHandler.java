@@ -129,5 +129,17 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ThereIsNoTreeInFieldException.class)
+    public ResponseEntity<String> handleThereIsNoTreeInFieldException(ThereIsNoTreeInFieldException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ThereIsNoHarvestDetailsInTreeException.class)
+    public ResponseEntity<String> handleThereIsNoHarvestDetailsInTreeException(ThereIsNoHarvestDetailsInTreeException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
 
 }
