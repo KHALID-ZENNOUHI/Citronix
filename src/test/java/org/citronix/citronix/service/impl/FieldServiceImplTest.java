@@ -34,7 +34,6 @@ class FieldServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        // Initialize mocks created above
         MockitoAnnotations.openMocks(this);
     }
 
