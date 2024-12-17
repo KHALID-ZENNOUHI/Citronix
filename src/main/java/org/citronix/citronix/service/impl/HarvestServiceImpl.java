@@ -112,7 +112,6 @@ public class HarvestServiceImpl implements HarvestService {
         Field field = fieldService.findById(fieldId);
         if (field.getTrees() == null || field.getTrees().isEmpty()) throw new ThereIsNoTreeInFieldException();
         Tree tree = field.getTrees().get(0);
-        if (tree.getHarvestDetails() == null || tree.getHarvestDetails().isEmpty()) throw new ThereIsNoHarvestDetailsInTreeException();
         return tree.getHarvestDetails().stream().map(HarvestDetail::getHarvest).toList();
     }
 

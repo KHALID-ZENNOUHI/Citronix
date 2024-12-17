@@ -18,7 +18,7 @@ public class FarmController {
     private final FarmService farmService;
     private final FarmMapper farmMapper;
 
-    public FarmController(@Qualifier("farmServiceImpl") FarmService farmService, FarmMapper farmMapper) {
+    public FarmController(FarmService farmService, FarmMapper farmMapper) {
         this.farmService = farmService;
         this.farmMapper = farmMapper;
     }

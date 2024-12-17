@@ -1,0 +1,49 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1732891717241-3
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: role
+                  type: VARCHAR(255)
+            tableName: app_user
+  - changeSet:
+      id: 1732891717241-4
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: username
+            constraintName: uc_appuser_username
+            tableName: app_user
+  - changeSet:
+      id: 1732891717241-5
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropColumn:
+            columnName: saled_quantity
+            tableName: sale
+  - changeSet:
+      id: 1732891717241-1
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - modifyDataType:
+            columnName: season
+            newDataType: VARCHAR(255)
+            tableName: harvest
+  - changeSet:
+      id: 1732891717241-2
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addNotNullConstraint:
+            columnDataType: VARCHAR(255)
+            columnName: username
+            tableName: app_user
+            validate: true
+
