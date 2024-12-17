@@ -34,7 +34,6 @@ class FieldServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        //test jenkins
         MockitoAnnotations.openMocks(this);
     }
 
